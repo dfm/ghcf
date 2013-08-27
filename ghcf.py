@@ -95,6 +95,12 @@ def train_model(K=50, rate=0.01, alpha=0.01, beta=0.01):
                 logging.info("Event skipped because of missing repository")
                 continue
 
+            # Sometimes there's a bug in the data and the repository doesn't
+            # have an owner. Eff that shit.
+            if reponame[0] == "/":
+                logging.info("Event skipped because there was no repo owner.")
+                continue
+
             # Normalize the repository name.
             reponame = reponame.lower()
 
