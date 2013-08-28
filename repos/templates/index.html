@@ -5,22 +5,30 @@
 
     <title>Repos</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Grand+Hotel|Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
     <style>
 
         body, html {
-            font-family: "Helvetica Neue", Helvetica, sans-serif;
+            font-family: "Roboto Slab", "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 28px;
+            font-weight: 300;
+            line-height: 1.7;
             background: #eee;
-            color: #111;
+            color: #222;
         }
 
         body {
-            margin-top: 100px;
+            margin: 75px 0 50px;
+        }
+
+        strong {
+            font-weight: 700;
         }
 
         a {
             color: rgb(2, 144, 212);
-            font-weight: bold;
+            font-weight: 700;
+            text-decoration: none;
         }
 
         header {
@@ -48,13 +56,95 @@
             font-size: 13px;
             height: 40px;
             line-height: 40px;
-            font-style: italic;
+            font-style: normal;
             text-align: center;
         }
 
         .container {
             width: 600px;
             margin: 0 auto;
+        }
+
+        #top-form {
+            text-align: center;
+            padding: 75px 0;
+        }
+
+        input {
+            font-family: "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: #222;
+            width: 500px;
+            padding: 12px 12px;
+            margin: 15px 0;
+            border-radius: 0;
+            border: 0;
+            border-bottom: 3px solid #ccc;
+        }
+
+        input:focus {
+            border-color: rgb(2, 144, 212);
+            outline: 0;
+            outline: thin dotted \9; /* IE6-9 */
+        }
+
+        #repos {
+            background: #fff;
+            border-radius: 0 0 6px 6px;
+            border: 1px solid #ddd;
+            border-top: 0;
+            padding: 25px 0;
+        }
+
+        .intro {
+            font-style: italic;
+            padding: 0 0 25px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .intro a {
+            display: block;
+            font-size: 36px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #repos li {
+            background: #fff;
+            font-size: 36px;
+            padding: 15px 25px;
+            line-height: 1;
+            border: 1px solid transparent;
+            border-left: 0;
+            border-right: 0;
+        }
+
+        #repos li:hover {
+            background: #eee;
+            border-color: #ddd;
+        }
+
+        .reponame {
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .ghbutton {
+            font-size: 13px;
+        }
+
+        #repos li .ghbutton a {
+            color: transparent;
+        }
+
+        #repos li:hover .ghbutton a {
+            color: rgb(2, 144, 212);
         }
 
     </style>
@@ -69,11 +159,37 @@
     </header>
 
     <div class="container">
+        <div id="repos">
+            <div class="intro">
+                If you like <a href="">dfm/emcee</a> you should also check out
+            </div>
+            <ul>
+                <li>
+                    <div class="reponame">dfm/osrc</div>
+                    <div class="ghbutton"><a href="">View on GitHub</a></div>
+                </li>
+                <li>
+                    <div class="reponame">dfm/osrc</div>
+                    <div class="ghbutton"><a href="">View on GitHub</a></div>
+                </li>
+                <li>
+                    <div class="reponame">twitter/bootstrap</div>
+                    <div class="ghbutton"><a href="">View on GitHub</a></div>
+                </li>
+            </ul>
+        </div>
+        <div id="top-form">
+            Enter the name of a <a href="https://github.com">GitHub</a> repository
+            <form>
+                <input type="text" placeholder="Try: mbostock/d3" />
+            </form>
+            to find similar repositories.
+        </div>
     </div>
 
     <footer>
         <div class="container">
-            Another hack by <a href="http://dan.iel.fm">Dan F-M</a>.
+            Made by <a href="http://dan.iel.fm">Dan F-M</a> in NYC.
         </div>
     </footer>
 

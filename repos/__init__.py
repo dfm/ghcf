@@ -7,6 +7,7 @@ __all__ = ["app"]
 
 import flask
 import redis
+import random
 from .find import find_similar
 
 app = flask.Flask(__name__)
@@ -35,5 +36,8 @@ def similar():
 @app.route("/api/top")
 @app.route("/api/top/<int:N>")
 def top(N=10):
-    repolist = rdb.zrevrange("ghcf:repo:{0}".format(reponame), 0, N)
-    return N
+    N = min([N, 100])
+    repolist = rdb.zrevrange("ghcf:count:repo", 0, 10 * N)
+    random.shuffle(repolist)
+    repolist = repolist[:N]
+    return flask.jsonify(count=len(repolist), repos=repolist)
