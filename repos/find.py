@@ -13,14 +13,16 @@ from collections import defaultdict
 rdb = redis.Redis()
 
 
-def find_similar(reponame, N=10, nusers=-1):
+def find_similar(reponame, N=10, nusers=1000):
     # Normalize the repository name.
     reponame = reponame.lower()
 
     # Check the cache.
-    values = rdb.zrevrange("ghcf:cache:{0}".format(reponame), 0, N-1,
-                           withscores=True)
-    if len(values):
+    pipe = rdb.pipeline()
+    pipe.exists("ghcf:cache:{0}".format(reponame))
+    pipe.zrevrange("ghcf:cache:{0}".format(reponame), 0, N-1, withscores=True)
+    exists, values = pipe.execute()
+    if exists:
         return values
 
     # Find the users that have interacted with the requested repository.
@@ -28,7 +30,6 @@ def find_similar(reponame, N=10, nusers=-1):
 
     # Loop over the users and find which repositories the user has interacted
     # with.
-    pipe = rdb.pipeline()
     [pipe.zrevrange("ghcf:user:{0}".format(user), 0, -1) for user in userlist]
 
     # Count the number of interactions with each repository.
@@ -56,10 +57,8 @@ def find_similar(reponame, N=10, nusers=-1):
                                     map(sqrt, map(log10, scores)))))
 
     # Update the cache.
-    pipe.zadd("ghcf:cache:{0}".format(reponame),
-              *[v for row in final for v in row])
-    pipe.expire("ghcf:cache:{0}".format(reponame), 3600)
-    pipe.execute()
+    rdb.zadd("ghcf:cache:{0}".format(reponame),
+             *[v for row in final for v in row])
 
     return sorted(final, key=lambda v: v[1], reverse=True)[:N]
 

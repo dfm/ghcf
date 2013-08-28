@@ -15,8 +15,9 @@ rdb = redis.Redis()
 
 
 @app.route("/")
+@app.route("/<fail>")
 @app.route("/<user>/<repo>")
-def index(user=None, repo=None):
+def index(user=None, repo=None, fail=None):
     return flask.render_template("index.html")
 
 

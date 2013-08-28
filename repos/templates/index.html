@@ -74,24 +74,45 @@
 
         <div class="line">
             Welcome to <strong>Repository Recommendations</strong>, by <a href="http://dan.iel.fm">Dan F-M</a>.
+            This service recommends similar repositories based on an approximate
+            social graph of GitHub activity.
         </div>
         <div class="line">&nbsp;</div>
         <div class="line">
             Enter the name of a <a href="https://github.com">GitHub</a> repository that you like:
         </div>
         <div class="line">
-            &gt; <input type="text" placeholder="username/reponame" size="60" autofocus />
+            <form id="repoform">
+            &gt; <input id="repoinput" type="text" placeholder="username/reponame" size="60" autofocus />
+            </form>
+        </div>
+        <div id="errorblock" style="display: none;">
+            <div class="line">&nbsp;</div>
+            <div class="line error">
+                Sorry. The robot doesn't have enough information about that repository. Try another?
+            </div>
+        </div>
+        <div id="invalidblock" style="display: none;">
+            <div class="line">&nbsp;</div>
+            <div class="line error">
+                That's an invalid repository name. It should have the form
+                <strong>username/reponame</strong>.
+            </div>
         </div>
         <div class="line">&nbsp;</div>
-        <div class="line error">
-            Sorry. The robot doesn't have enough information about that repository. Try another?
+        <div id="loading" class="line" style="display: none;">
+            Loading...
         </div>
-        <div class="line">&nbsp;</div>
-        <div class="line">
-            According to the robot, you should check out:
-        </div>
-        <div class="line">
-            * <a href="" class="reponame">dfm/emcee</a> (<a href="" class="more">more like this</a>)
+        <div id="recommendations" style="display: none;">
+            <div class="line">
+                According to the robot, you should check out:
+            </div>
+
+            <script type="text/html" id="repo-template">
+            <div class="line repo">
+                * <a href="https://github.com/<%= name %>" target="_blank" class="reponame"><%= name %></a> (<a href="/<%= name %>" class="more">more like this</a>)
+            </div>
+        </script>
         </div>
 
     </div>
