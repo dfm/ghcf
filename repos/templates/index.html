@@ -45,7 +45,7 @@
             font-size: 18px;
             font-weight: 400;
             background: #fdf6e3;
-            color: #657b83;
+            color: #859900;
         }
 
         input:focus {
@@ -95,6 +95,13 @@
         </div>
 
     </div>
+
+    <script src="{{ url_for('static', filename='jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='json2.js') }}"></script>
+    <script src="{{ url_for('static', filename='underscore-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='backbone-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='repos.js') }}"></script>
+    <script>window.API_URL = "{{ url_for('similar') }}";</script>
 
 </body>
 </html>
