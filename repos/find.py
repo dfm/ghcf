@@ -20,8 +20,8 @@ def find_similar(reponame, N=10, nusers=-1):
     # Check the cache.
     values = rdb.zrevrange("ghcf:cache:{0}".format(reponame), 0, N-1,
                            withscores=True)
-    # if len(values):
-    #     return values
+    if len(values):
+        return values
 
     # Find the users that have interacted with the requested repository.
     userlist = rdb.zrevrange("ghcf:repo:{0}".format(reponame), 0, nusers)
