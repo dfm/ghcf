@@ -58,7 +58,7 @@ def find_similar(reponame, N=10):
     # Update the cache.
     pipe.zadd("ghcf:cache:{0}".format(reponame),
               *[v for row in final for v in row])
-    pipe.expire("ghcf:cache:{0}".format(reponame), 60)
+    pipe.expire("ghcf:cache:{0}".format(reponame), 3600)
     pipe.execute()
 
     return sorted(final, key=lambda v: v[1], reverse=True)[:N]
