@@ -3,151 +3,66 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-    <title>Repos</title>
+    <title>Repository Recommendations</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Grand+Hotel|Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'> -->
     <style>
 
         body, html {
-            font-family: "Roboto Slab", "Helvetica Neue", Helvetica, sans-serif;
-            font-size: 28px;
-            font-weight: 300;
-            line-height: 1.7;
-            background: #eee;
-            color: #222;
+            font-family: "Source Code Pro", "Courier Neue", courier, monospace;
+            font-size: 18px;
+            font-weight: 400;
+            background: #fdf6e3;
+            color: #657b83;
         }
 
         body {
-            margin: 75px 0 50px;
-        }
-
-        strong {
-            font-weight: 700;
-        }
-
-        a {
-            color: rgb(2, 144, 212);
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        header {
-            font-family: 'Grand Hotel', cursive;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            border-bottom: 1px solid #ddd;
-            background: #fff;
-            color: rgb(2, 144, 212);
-            font-size: 28px;
-            height: 75px;
-            line-height: 75px;
-            text-align: center;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            border-top: 1px solid #ddd;
-            background: #fff;
-            font-size: 13px;
-            height: 40px;
-            line-height: 40px;
-            font-style: normal;
-            text-align: center;
-        }
-
-        .container {
-            width: 600px;
-            margin: 0 auto;
-        }
-
-        #top-form {
-            text-align: center;
-            padding: 75px 0;
-        }
-
-        input {
-            font-family: "Helvetica Neue", Helvetica, sans-serif;
-            font-size: 28px;
-            font-weight: 300;
-            color: #222;
-            width: 500px;
-            padding: 12px 12px;
-            margin: 15px 0;
-            border-radius: 0;
-            border: 0;
-            border-bottom: 3px solid #ccc;
-        }
-
-        input:focus {
-            border-color: rgb(2, 144, 212);
-            outline: 0;
-            outline: thin dotted \9; /* IE6-9 */
-        }
-
-        #repos {
-            background: #fff;
-            border-radius: 0 0 6px 6px;
-            border: 1px solid #ddd;
-            border-top: 0;
-            padding: 25px 0;
-        }
-
-        .intro {
-            font-style: italic;
-            padding: 0 0 25px;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        .intro a {
-            display: block;
-            font-size: 36px;
-        }
-
-        ul {
-            list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        #repos li {
-            background: #fff;
-            font-size: 36px;
-            padding: 15px 25px;
-            line-height: 1;
-            border: 1px solid transparent;
-            border-left: 0;
-            border-right: 0;
+        a {
+            color: #268bd2;
         }
 
-        #repos li:hover {
-            background: #eee;
-            border-color: #ddd;
+        strong {
+            color: #d33682;
+            font-weight: 700;
+        }
+
+        #terminal {
+            margin: 20px auto;
+            padding: 0 20px;
+            width: 780px;
+        }
+
+        input {
+            border: none;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            font-family: "Source Code Pro", "Courier Neue", courier, monospace;
+            font-size: 18px;
+            font-weight: 400;
+            background: #fdf6e3;
+            color: #657b83;
+        }
+
+        input:focus {
+            outline: 0;
+            outline: thin dotted \9;
         }
 
         .reponame {
-            cursor: pointer;
-            font-weight: 400;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: clip;
+            font-weight: 700;
         }
 
-        .ghbutton {
-            font-size: 13px;
+        .more {
+            color: #b58900;
         }
 
-        #repos li .ghbutton a {
-            color: transparent;
-        }
-
-        #repos li:hover .ghbutton a {
-            color: rgb(2, 144, 212);
+        .error {
+            color: #dc322f;
         }
 
     </style>
@@ -155,46 +70,31 @@
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            Repository Recommendations
-        </div>
-    </header>
+    <div id="terminal">
 
-    <div class="container">
-        <div id="repos">
-            <div class="intro">
-                If you like <a href="">dfm/emcee</a> you should also check out
-            </div>
-            <ul>
-                <li>
-                    <div class="reponame">CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers</div>
-                    <div class="ghbutton"><a href="">View on GitHub</a></div>
-                </li>
-                <li>
-                    <div class="reponame">dfm/osrc</div>
-                    <div class="ghbutton"><a href="">View on GitHub</a></div>
-                </li>
-                <li>
-                    <div class="reponame">twitter/bootstrap</div>
-                    <div class="ghbutton"><a href="">View on GitHub</a></div>
-                </li>
-            </ul>
+        <div class="line">
+            Welcome to <strong>Repository Recommendations</strong>, by <a href="http://dan.iel.fm">Dan F-M</a>.
         </div>
-        <div id="top-form">
-            Enter the name of a <a href="https://github.com">GitHub</a> repository
-            <form>
-                <input type="text" placeholder="Try: mbostock/d3" />
-            </form>
-            to find similar repositories.
+        <div class="line">&nbsp;</div>
+        <div class="line">
+            Enter the name of a <a href="https://github.com">GitHub</a> repository that you like:
         </div>
+        <div class="line">
+            &gt; <input type="text" placeholder="username/reponame" size="60" autofocus />
+        </div>
+        <div class="line">&nbsp;</div>
+        <div class="line error">
+            Sorry. The robot doesn't have enough information about that repository. Try another?
+        </div>
+        <div class="line">&nbsp;</div>
+        <div class="line">
+            According to the robot, you should check out:
+        </div>
+        <div class="line">
+            * <a href="" class="reponame">dfm/emcee</a> (<a href="" class="more">more like this</a>)
+        </div>
+
     </div>
-
-    <footer>
-        <div class="container">
-            Made by <a href="http://dan.iel.fm">Dan F-M</a> in NYC.
-        </div>
-    </footer>
 
 </body>
 </html>
