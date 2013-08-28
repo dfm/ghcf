@@ -106,11 +106,14 @@ def train_model(K=50, rate=0.01, alpha=0.01, beta=0.01):
 
             # Get the current vectors.
             pipe.zincrby("ghcf:user:{0}".format(actor), reponame, 1)
-            pipe.incr("ghcf:user:{0}:count".format(actor))
+            pipe.zincrby("ghcf:count:user", actor, 1)
             pipe.zincrby("ghcf:repo:{0}".format(reponame), actor, 1)
-            pipe.incr("ghcf:repo:{0}:count".format(reponame))
+            pipe.zincrby("ghcf:count:repo", reponame, 1)
             pipe.execute()
 
 
 if __name__ == "__main__":
-    train_model()
+    from multiprocessing import Pool
+    N = 10
+    pool = Pool(N)
+    pool.map(train_model, range(N))
