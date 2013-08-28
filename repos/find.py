@@ -13,18 +13,18 @@ from collections import defaultdict
 rdb = redis.Redis()
 
 
-def find_similar(reponame, N=10):
+def find_similar(reponame, N=10, nusers=-1):
     # Normalize the repository name.
     reponame = reponame.lower()
 
     # Check the cache.
     values = rdb.zrevrange("ghcf:cache:{0}".format(reponame), 0, N-1,
                            withscores=True)
-    if len(values):
-        return values
+    # if len(values):
+    #     return values
 
     # Find the users that have interacted with the requested repository.
-    userlist = rdb.zrevrange("ghcf:repo:{0}".format(reponame), 0, -1)
+    userlist = rdb.zrevrange("ghcf:repo:{0}".format(reponame), 0, nusers)
 
     # Loop over the users and find which repositories the user has interacted
     # with.
