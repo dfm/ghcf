@@ -13,14 +13,15 @@ from collections import defaultdict
 rdb = redis.Redis()
 
 
-def find_similar(reponame, N=10, nusers=1000):
+def find_similar(reponame, skip=0, N=10, nusers=1000):
     # Normalize the repository name.
     reponame = reponame.lower()
 
     # Check the cache.
     pipe = rdb.pipeline()
     pipe.exists("ghcf:cache:{0}".format(reponame))
-    pipe.zrevrange("ghcf:cache:{0}".format(reponame), 0, N-1, withscores=True)
+    pipe.zrevrange("ghcf:cache:{0}".format(reponame), skip, skip+N-1,
+                   withscores=True)
     exists, values = pipe.execute()
     if exists:
         return values
@@ -60,7 +61,7 @@ def find_similar(reponame, N=10, nusers=1000):
     rdb.zadd("ghcf:cache:{0}".format(reponame),
              *[v for row in final for v in row])
 
-    return sorted(final, key=lambda v: v[1], reverse=True)[:N]
+    return sorted(final, key=lambda v: v[1], reverse=True)[skip:skip+N]
 
 
 if __name__ == "__main__":
