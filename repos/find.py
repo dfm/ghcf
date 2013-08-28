@@ -48,7 +48,7 @@ def find_similar(reponame, N=10):
     names, similarities = zip(*repodict.items())
 
     # Get the "popularity" of the similar repositories.
-    [pipe.get("ghcf:repo:{0}:count".format(r)) for r in names]
+    [pipe.zscore("ghcf:count:repo", r) for r in names]
     scores = [int(v) if v is not None else 1 for v in pipe.execute()]
 
     # Compute the final scores.

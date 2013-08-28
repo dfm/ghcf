@@ -6,6 +6,7 @@ from __future__ import (division, print_function, absolute_import,
 
 __all__ = ["get_random_events"]
 
+import time
 import gzip
 import json
 import redis
@@ -20,18 +21,18 @@ total_time = datetime.today() - initial_date
 rdb = redis.Redis()
 
 
-def get_random_events(tries=0):
+def get_random_events(rng, tries=0):
     # Build the archive URL.
-    date = initial_date + timedelta(days=random.random() ** 0.5
+    date = initial_date + timedelta(days=rng.random() ** 0.5
                                     * total_time.days)
     url = ("http://data.githubarchive.org/" + date.strftime("%Y-%m-%d")
-           + "-{0}.json.gz".format(random.randint(0, 23)))
+           + "-{0}.json.gz".format(rng.randint(0, 23)))
 
     # Download the file.
     r = requests.get(url)
     if r.status_code != requests.codes.ok:
         if tries < 20:
-            return get_random_events(tries=tries + 1)
+            return get_random_events(rng, tries=tries + 1)
         r.raise_for_status()
 
     # Parse the content.
@@ -40,13 +41,13 @@ def get_random_events(tries=0):
                   for line in gzip.GzipFile(fileobj=StringIO(r.content))]
     except ValueError:
         if tries < 20:
-            return get_random_events(tries=tries + 1)
+            return get_random_events(rng, tries=tries + 1)
         raise
 
     return events
 
 
-def train_model(K=50, rate=0.01, alpha=0.01, beta=0.01):
+def train_model(rng):
     iteration = 1
     pipe = rdb.pipeline()
     while True:
@@ -54,7 +55,7 @@ def train_model(K=50, rate=0.01, alpha=0.01, beta=0.01):
         iteration += 1
 
         # Get a random event chunk.
-        events = get_random_events()
+        events = get_random_events(rng)
 
         # Loop over the events.
         for event in events:
@@ -116,4 +117,8 @@ if __name__ == "__main__":
     from multiprocessing import Pool
     N = 10
     pool = Pool(N)
-    pool.map(train_model, range(N))
+    rngs = [random.Random() for n in range(N)]
+    s = time.time()
+    [r.seed(s) for n, r in enumerate(rngs)]
+    [r.jumpahead(n) for n, r in enumerate(rngs)]
+    pool.map(train_model, rngs)
