@@ -65,4 +65,4 @@ def find_similar(reponame, N=10):
 
 
 if __name__ == "__main__":
-    print(find_similar("scipy/scipy"))
+    print(find_similar("numpy/numpy"))

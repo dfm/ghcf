@@ -20,4 +20,6 @@ def similar():
                 400)
 
     repos = find_similar(reponame)
-    return flask.jsonify(count=len(repos), repositories=repos)
+    fields = ["name", "score"]
+    return flask.jsonify(count=len(repos),
+                         repos=[dict(zip(fields, repo)) for repo in repos])
